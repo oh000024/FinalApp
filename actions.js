@@ -1,0 +1,119 @@
+import axios from "axios";
+
+export const ACTION_TYPE = "ACTION_TYPE";
+export const FETCH_REQUEST = "FETCH_REQUEST";
+export const GOBACK_ACTION = "GOBACK_ACTION";
+export const FETCH_DATA_SUCESS = "FETCH_DATA_SUCESS";
+export const SELECT_RESTAURANT = "SELECT_RESTAURANT";
+export const GET_LOCATION = "GET_LOCATION";
+export const SHOW_DETAIL = "SHOW_DETAIL";
+export const HIDE_DETAIL = "HIDE_DETAIL";
+
+const ACCESS_TOKEN="f-dh-VEE-rh3UJnFgb2O6iQJXiEizz8UeDo6hSaUY7uDWJMn7W_9Vf-21If0mqblgRW8_RwLL5I1Hg8-1Vwvt64z-dFdwwozodu-t5HDnaJVjl6zRcqDfbQXMzpJWnYx";
+export function actionCreator() {
+    return {
+        type: ACTION_TYPE
+    };
+}
+export function selectRestaurant(data) {
+    return {
+		type: SELECT_RESTAURANT,
+		payload:data
+    };
+}
+
+export function showDetailRestaurant() {
+    return {
+		type: SHOW_DETAIL,
+		
+    };
+}
+export function hideDetail(data) {
+    return {
+		type: HIDE_DETAIL,
+		payload:data
+    };
+}
+export function goBack(){
+	return{
+		type:GOBACK_ACTION,
+	}
+}
+// export function delayedAction() {
+// 	return(dispatch) =>{
+        
+// 		setTimeout(()=>{
+// 			dispatch(actionCreator());
+			
+//         },5000);
+// 	};
+// }
+
+export function fetchRequest() {
+	console.log("fetchRequest");
+    return {
+        type: FETCH_REQUEST
+    };
+}
+
+export function fetchDataSuccess(data){
+	console.log("fetchDataSuccess");
+	return {
+		type: FETCH_DATA_SUCESS,
+		data:data
+	};
+}
+function geo_sucess(){
+
+}
+function geo_error(){
+
+}
+export function getLocation(){
+	return (dispatch) =>{
+		var options = {
+			enableHighAccuracy: true,
+			timeout: 5000,
+			maximumAge: 0
+		  };
+		const geolocation = navigator.geolocation;
+		geolocation.getCurrentPosition((
+			position) => {
+            console.log(position.coords);
+            dispatch( fetchData(position.coords));
+		},
+		()=>{return},
+		options);
+	}
+}
+export function fetchData(postion){
+	return(dispatch)=> {
+
+		console.log();
+		// let place = "Algonquin%20College";
+		// let longitude = -75.93452;
+		// let latitude = 45.302426;
+		let place = "latitude="+postion.latitude+"&longitude="+postion.longitude;
+		// let url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + place;
+		let url = "https://api.yelp.com/v3/businesses/search?" + place;
+		
+		console.log(url);
+		dispatch(fetchRequest());
+		axios.get(url,{
+			headers: {
+			"Authorization": "Bearer "+ ACCESS_TOKEN,
+		  }}
+		).then((response) =>{
+			/* eslint no-debugger: 0 */
+			// debugger;
+			return response;
+		}).then((response)=> {
+			console.log(response.data);
+			let address = response.data;
+			dispatch(fetchDataSuccess(address));
+		}).catch(function (error) {
+			console.log(error);
+		  });;
+    };
+
+}
