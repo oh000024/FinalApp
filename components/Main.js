@@ -13,12 +13,12 @@ import {
     Body, 
     Icon, 
     Text,
+    Footer,
+    FooterTab,
     Spinner} from 'native-base';
 import Restaurant from './Restaurant';
 import RestaurantDetail from './RestaurantDetail';
 import * as actions from "../actions";
-
-console.log(actions);
 
 export class Main extends Component {
   constructor(props) {
@@ -52,26 +52,22 @@ export class Main extends Component {
     if(!this.props.businesses) return;
     else if(this.props.showDetail!=true){
         return this.props.businesses.map((item) => {
-      
-    //   let dist = Number(item.distance / 1000).toFixed(2);
-    //   let basicInfo = item.name +"(" +dist + "km"+")";
-    //    return (
-    //    <ListItem key={item.name}>
-    //     <Text>{basicInfo}</Text>
-    //     <Right>
-    //       <Icon name="arrow-forward" onPress={this.buttonPress}/>
-    //     </Right>
-    //   </ListItem>);
-       //<List key ={count++}> <Restaurant  restaurant = {item} /></List>
         return <Restaurant key={count++} restaurant = {item} />
-    
         }) 
     }//ELSE IF
-    else {
-
-    }
-
   };//END OF FUNC
+  renderFooter(){
+    return (
+        <Footer>
+        <FooterTab>
+        <Button full>
+            <Text>Jake Oh ^^ b</Text>
+        </Button>
+        </FooterTab>
+    </Footer>      
+    )
+}
+
   render() {
 
     if(!this.props.showDetail){
@@ -81,6 +77,7 @@ export class Main extends Component {
                 <Content>
                 {this.renderButton()}{this.renderListItem()}
                 </Content>
+                {this.renderFooter()}
             </Container>
         );
     } else {
@@ -94,6 +91,7 @@ export class Main extends Component {
                 </Button>
                 <RestaurantDetail />
                 </Content>
+                {this.renderFooter()}
             </Container>
         );
     }

@@ -1,8 +1,6 @@
-import React from 'react';
-import {
-  Provider
-} from "react-redux";
-import Main from "./components/Main"
+import React from "react";
+import {Provider} from "react-redux";
+import Main from "./components/Main";
 import {
   createStore,
   applyMiddleware,

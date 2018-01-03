@@ -2,12 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from "prop-types";
 import {connect} from 'react-redux'
 import * as actions from "../actions"
-import {
-    ListItem, 
-    Left, 
-    Right, 
-    Icon, 
-    Text} from 'native-base';
+import {ListItem,Left,Right,Icon,Text} from 'native-base';
 
 
 export class Restaurant extends Component{
